@@ -1,3 +1,0 @@
-interface IVA {
-    float calculateIVA();
-}

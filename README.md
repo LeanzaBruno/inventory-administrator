@@ -1,4 +1,3 @@
-# Supermarket-btcmp
-Un pequeño trabajo entregable para el bootcamp
+# Supermarket
 
-En la carpeta design hay un par de modelos que usé para guiarme mejor en el proyecto
+Un pequeño proyecto que modela la organización de un catálogo de un supermercado hecho con Spring
