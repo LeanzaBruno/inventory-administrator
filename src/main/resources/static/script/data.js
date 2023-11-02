@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/articles";
+const API_URL = "http://localhost:8080/api/articles";
 fetch(API_URL)
 .then(response => response.json())
 .then(data => {
@@ -23,5 +23,16 @@ fetch(API_URL)
 
         var cellStock = row.insertCell();
         cellStock.appendChild(document.createTextNode(articles[i].stock));
+
+        var buttonCell = row.insertCell();
+        buttonCell.appendChild(createButton("Editar"));
+        buttonCell.appendChild(createButton("Eliminar"));
      }
  });
+
+ function createButton(text){
+    var button = document.createElement("button");
+    button.textContent = text;
+    button.classList.add("btn", "btn-secondary");
+    return button;
+ }
