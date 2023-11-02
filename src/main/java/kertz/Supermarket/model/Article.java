@@ -1,22 +1,20 @@
 package kertz.Supermarket.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Article {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int code;
     private float price;
     private String description;
     private float iva;
     private int stock;
 
-    Article(){}
-    Article(int code, String description, float price, float iva, int stock) {
+    public Article(){}
+    public Article(int code, String description, float price, float iva, int stock) {
         this.code = code;
         this.description = description;
         this.price = price;
@@ -24,19 +22,24 @@ public class Article {
         this.stock = stock;
     }
 
-    int getCode() { return code; }
+    public int getCode() { return code; }
 
-    float getPrice() { return (1 + iva) * price; }
+    public float getPrice() { return (1 + iva) * price; }
 
-    String getDescription() { return description; }
+    public String getDescription() { return description; }
 
-    float getIva(){ return iva; }
+    public float getIva(){ return iva; }
 
-    int getStock() { return stock; }
+    public int getStock() { return stock; }
 
     @Override
     public boolean equals(Object anotherArticle){
         if(anotherArticle == null || anotherArticle.getClass() != this.getClass() ) return false;
         return this.code ==  ((Article)anotherArticle).code;
+    }
+
+    @Override
+    public String toString(){
+        return "Article [code = " + code + ", description = " + description + ", price = " + price + ", iva = " + iva + ", stock = " + stock + "]";
     }
 }
