@@ -28,9 +28,17 @@ public class Article {
 
     public String getDescription() { return description; }
 
-    public float getIva(){ return iva; }
+    public float getIVA(){ return iva; }
 
     public int getStock() { return stock; }
+
+    public void setDescription(String description){ this.description = description; }
+
+    public void setPrice(float price){ this.price = price; }
+
+    public void setIVA(float iva){ this.iva = iva; }
+
+    public void setStock(int stock) { this.stock = stock; }
 
     @Override
     public boolean equals(Object anotherArticle){
