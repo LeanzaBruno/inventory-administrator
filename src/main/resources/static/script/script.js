@@ -22,13 +22,12 @@ const modal = new bootstrap.Modal('#form');
       console.log("Artículo actualizado");
       reloadTable();
    });
+*/
    document.querySelector('#insert-btn').addEventListener('click', () => {
       const json = toJSON(Object.fromEntries(new FormData(form).entries()));
       postArticle(json);
-      console.log("Artículo agregado");
       reloadTable();
    });
-   */
 
    reloadTable();
 })();
