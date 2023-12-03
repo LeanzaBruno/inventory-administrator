@@ -9,13 +9,13 @@ const modal = new bootstrap.Modal('#form');
       clearForm();
    });
 
-/*
    document.querySelector('#delete-btn').addEventListener('click', () => {
-      const articleIndex = parseInt(deleteArticle(form.getAttribute('data')));
-      deleteArticle(articleIndex);
-      console.log("Artículo eliminado");
+      if(!confirm("Seguro que desea eliminar permanentemente este artículo?")) return;
+      const articleCode = parseInt(form.getAttribute('article-code'));
+      deleteArticle(articleCode);
       reloadTable();
    });
+/*
    document.querySelector('#update-btn').addEventListener('click', () => {
       const json = toJSON(Object.fromEntries(new FormData(form).entries()));
       putArticle(json);
@@ -41,7 +41,7 @@ const modal = new bootstrap.Modal('#form');
 function reloadTable(){
    modal.hide();
    clearTable();
-   getArticles().then(response => response.map( (article,index) => prepareRow(tbody.insertRow(), article, index) ));
+   getArticles().then(response => response.map( article => prepareRow(tbody.insertRow(), article) ));
 }
 
 
@@ -71,9 +71,9 @@ function clearForm(){
 /**
  * Fills row with the article's data
  */
-function prepareRow(row, article, index){
-   var cellNumber = row.insertCell();
-   cellNumber.appendChild(document.createTextNode(String(index+1)));
+function prepareRow(row, article){
+   var cellCode = row.insertCell();
+   cellCode.appendChild(document.createTextNode(String(article.code)));
 
    var cellDescription = row.insertCell();
    cellDescription.appendChild(document.createTextNode(article.description));
@@ -93,7 +93,7 @@ function prepareRow(row, article, index){
    row.addEventListener('click', () => {
       form.classList.remove('create-mode');
       form.classList.add('edit-mode');
-      form.setAttribute('data-article', index);
+      form.setAttribute('article-code', article.code);
       form.querySelector('#description').value = article.description;
       form.querySelector('#price').value = article.price;
       form.querySelector('#stock').value = article.stock;
@@ -104,34 +104,10 @@ function prepareRow(row, article, index){
 
 
 /**
- * This function takes care of the form related events (create, modify, delete).
- * @param {Event} event 
- */
-function handleSubmit(event){
-   event.preventDefault();
-
-   const selectedArticle = parseInt(event.target.getAttribute('data-article'));
-
-   if(!deleteArticle){
-   }
-   else{
-
-
-   }
-
-
-   fillTable();
-}
-
-
-/**
  * 
- * API FUNCTIONS
+ * CONNECTION WITH THE REST API
  * 
  * */
-
-   
-
 
 
 /**
@@ -178,13 +154,11 @@ function getArticle(index){
 
 /**
  * Deletes article from the api
- * @param {int} index 
+ * @param {int} code 
  */
-function deleteArticle(index){
+function deleteArticle(code){
    try{
-      fetch(API_URL + '/' + index, { method: 'DELETE' })
-         .then(res => res.text() )
-         .then(res => console.log(res));
+      fetch(API_URL + '/' + code, { method: 'DELETE' });
    }
    catch(error){ console.err("ERROR: Couldn't remove article")}
 }
