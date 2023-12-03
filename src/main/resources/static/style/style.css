@@ -1,0 +1,30 @@
+@charset "UTF-8";
+tbody tr {
+  cursor: pointer;
+}
+
+.create-mode .modal-title::before {
+  content: "Crear artículo";
+}
+.create-mode #insert-btn {
+  visibility: visible;
+}
+.create-mode #delete-btn {
+  display: none;
+}
+.create-mode #update-btn {
+  display: none;
+}
+
+.edit-mode .modal-title::before {
+  content: "Editar artículo";
+}
+.edit-mode #update-btn {
+  visibility: visible;
+}
+.edit-mode #delete-btn {
+  visibility: visible;
+}
+.edit-mode #insert-btn {
+  display: none;
+}/*# sourceMappingURL=style.css.map */

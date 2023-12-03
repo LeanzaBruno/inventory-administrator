@@ -41,3 +41,6 @@ build/
 
 ## StarUML ##
 *.mdj
+
+## SCSS
+*.css*
