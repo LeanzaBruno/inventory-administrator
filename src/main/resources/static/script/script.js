@@ -11,18 +11,16 @@ const modal = new bootstrap.Modal('#form');
 
    document.querySelector('#delete-btn').addEventListener('click', () => {
       if(!confirm("Seguro que desea eliminar permanentemente este artículo?")) return;
-      const articleCode = parseInt(form.getAttribute('article-code'));
-      deleteArticle(articleCode);
+      deleteArticle(form.getAttribute('article-code'));
       reloadTable();
    });
-/*
+
    document.querySelector('#update-btn').addEventListener('click', () => {
       const json = toJSON(Object.fromEntries(new FormData(form).entries()));
-      putArticle(json);
-      console.log("Artículo actualizado");
+      putArticle(form.getAttribute('article-code'), json);
       reloadTable();
    });
-*/
+
    document.querySelector('#insert-btn').addEventListener('click', () => {
       const json = toJSON(Object.fromEntries(new FormData(form).entries()));
       postArticle(json);
@@ -125,15 +123,15 @@ async function getArticles(){
 
 
 /**
- * Parses an object to json format
- * @param {*} obj the object 
- * @returns the object in json format
+ * Converts an article object into json format
+ * @param {Article} article the article 
+ * @returns the article in json format
  */
-function toJSON(obj){
-   obj.price = parseFloat(obj.price);
-   obj.iva = parseFloat(obj.iva);
-   obj.stock = parseInt(obj.stock);
-   return obj;
+function toJSON(article){
+   article.price = parseFloat(article.price);
+   article.iva = parseFloat(article.iva);
+   article.stock = parseInt(article.stock);
+   return article;
 }
     
 
@@ -152,34 +150,41 @@ function getArticle(index){
 
 
 /**
- * Deletes article from the api
- * @param {int} code 
+ * Sends a delete request to the api
+ * @param {int} code article's code
  */
 function deleteArticle(code){
+   const url = API_URL + '/' + code;
    try{
-      fetch(API_URL + '/' + code, { method: 'DELETE' });
+      fetch(url, { method: 'DELETE' });
    }
    catch(error){ console.err("ERROR: Couldn't remove article")}
 }
 
 
-function putArticle(json){
+/**
+ * Sends an update request to the api
+ * @param {int} code article's code
+ * @param {JSON} json json with data
+ */
+function putArticle(code, json){
+   const url = API_URL + '/' + code;
    try{
-      fetch(API_URL, { method: 'PUT',
-                             headers: {'Content-type': 'application/json'},
-                             body: JSON.stringify(json) });
+      fetch(url, { method: 'PUT',
+                   headers: {'Content-type': 'application/json'},
+                   body: JSON.stringify(json) });
    } catch(error){ console.log("Error: ", error); }
 }
 
 
 /**
- * Creates or updates an article into the rest api
+ * Sends a crate request to the api
  * @param {JSON} json json containing the article's data
  */
 function postArticle(json){
    try{
       fetch(API_URL, { method: 'POST',
-                             headers: {'Content-type': 'application/json'},
-                             body: JSON.stringify(json) });
+                       headers: {'Content-type': 'application/json'},
+                       body: JSON.stringify(json) });
    } catch(error){ console.log("Error: ", error); }
 }

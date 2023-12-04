@@ -30,14 +30,11 @@ public class ArticleController {
     @PutMapping("/articles/{id}")
     public Article updateArticle(@PathVariable int id, @RequestBody Article article){
         Article updateArticle = repository.findById(id).orElseThrow( () -> new ArticleNotFoundException(id) );
-
         updateArticle.setDescription(article.getDescription());
         updateArticle.setPrice(article.getPrice());
         updateArticle.setIVA(article.getIVA());
         updateArticle.setStock(article.getStock());
-
         repository.save(updateArticle);
-
         return updateArticle;
     }
 
