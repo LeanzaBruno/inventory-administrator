@@ -69,20 +69,20 @@ function clearForm(){
  * Fills row with the article's data
  */
 function prepareRow(row, article){
-   var cellCode = row.insertCell();
-   cellCode.appendChild(document.createTextNode(String(article.code)));
-
    var cellDescription = row.insertCell();
    cellDescription.appendChild(document.createTextNode(article.description));
 
    var cellPrice = row.insertCell();
-   cellPrice.appendChild(document.createTextNode("$ " + article.price ));
+   cellPrice.appendChild(document.createTextNode(article.price ));
+   cellPrice.classList.add('text-center');
 
    var cellIVA = row.insertCell();
-   cellIVA.appendChild(document.createTextNode(String(article.iva) + " %"));
+   cellIVA.appendChild(document.createTextNode(String(article.iva)));
+   cellIVA.classList.add('text-center');
 
    var cellStock = row.insertCell();
    cellStock.appendChild(document.createTextNode(article.stock));
+   cellStock.classList.add('text-center');
 
 
    row.setAttribute("data-bs-toggle", "modal");
@@ -91,8 +91,9 @@ function prepareRow(row, article){
       form.classList.remove('create-mode');
       form.classList.add('edit-mode');
       form.setAttribute('article-code', article.code);
+      form.querySelector('#code').value = article.code;
       form.querySelector('#description').value = article.description;
-      form.querySelector('#price').value = article.price;
+      form.querySelector('#price').value = "$" + article.price;
       form.querySelector('#stock').value = article.stock;
       form.querySelector('#iva').value = article.iva;
    });
