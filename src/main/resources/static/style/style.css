@@ -15,6 +15,9 @@ tbody tr {
 .create-mode #update-btn {
   display: none;
 }
+.create-mode .code {
+  display: none;
+}
 
 .edit-mode .modal-title::before {
   content: "Editar artículo";
@@ -23,6 +26,9 @@ tbody tr {
   visibility: visible;
 }
 .edit-mode #delete-btn {
+  visibility: visible;
+}
+.edit-mode .code {
   visibility: visible;
 }
 .edit-mode #insert-btn {

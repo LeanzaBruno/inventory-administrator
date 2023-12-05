@@ -8,11 +8,13 @@ tbody tr {
     #insert-btn { visibility: visible; }
     #delete-btn { display: none; }
     #update-btn { display: none; }
+    .code { display: none; }
 } 
 
 .edit-mode {
     .modal-title::before{ content: "Editar artículo"; }
     #update-btn { visibility: visible; }
     #delete-btn { visibility: visible; }
+    .code { visibility: visible; }
     #insert-btn { display: none; }
 } 
