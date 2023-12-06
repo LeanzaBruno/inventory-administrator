@@ -28,13 +28,18 @@ const modal = new bootstrap.Modal('#form');
    });
 
 
-   document.querySelector('#price').addEventListener('keyup', (event) => {
-      event.target.value = formatNumber(event.target.value);
+   document.querySelector('#price').addEventListener('keyup', event => {
+      event.target.value = "$ " + formatNumber(cleanPrice(event.target.value));
    });
 
    reloadTable();
 })();
 
+
+
+function cleanPrice(number){
+   return number.replaceAll(/[\$\ ]/g, '');
+}
 
 /**
  * Formats a number using 3 digits separation
@@ -149,7 +154,7 @@ function prepareRow(row, article){
       form.setAttribute('article-code', article.code);
       form.querySelector('#code').value = article.code;
       form.querySelector('#description').value = article.description;
-      form.querySelector('#price').value = "$" + formatNumber(String(article.price));
+      form.querySelector('#price').value = "$ " + formatNumber(String(article.price));
       form.querySelector('#stock').value = article.stock;
       form.querySelector('#iva').value = article.iva;
    });
