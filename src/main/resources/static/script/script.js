@@ -135,7 +135,6 @@ function prepareRow(row, article){
 
    var cellPrice = row.insertCell();
    cellPrice.appendChild(document.createTextNode( "$" + formatNumber( String(article.price) )));
-   cellPrice.classList.add('text-center');
 
    var cellIVA = row.insertCell();
    cellIVA.appendChild(document.createTextNode(String(article.iva)));
