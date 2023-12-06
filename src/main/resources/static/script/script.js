@@ -27,8 +27,64 @@ const modal = new bootstrap.Modal('#form');
       reloadTable();
    });
 
+
+   document.querySelector('#price').addEventListener('keyup', (event) => {
+      event.target.value = formatNumber(event.target.value);
+   });
+
    reloadTable();
 })();
+
+
+/**
+ * Formats a number using 3 digits separation
+ * @param {string} number Represents a float number in a string
+ */
+function formatNumber(number){
+   const decimalSeparatorIndex = number.indexOf('.');
+   if( decimalSeparatorIndex != -1 ){
+      const integerPart = number.substring(0, decimalSeparatorIndex );
+      const decimalPart = number.substring(decimalSeparatorIndex + 1);
+      return formatInteger(integerPart) + '.' + formatDecimal(decimalPart);
+   }
+   else return formatInteger(number);
+}
+
+
+/**
+ * Formats the integer part of a number using format 'xx xxx xxx'. E.g. '1 000 000'
+ * @param {string} integer Represents the integer part, in a string
+ * @returns formatted number
+ */
+function formatInteger(integer){
+   let counter = 0;
+   for(let index = integer.length ; index > 0 ; --index ){
+      if(counter == 3){
+         integer = integer.substring(0, index) + ' ' + integer.substring(index);
+         counter = 1;
+      }
+      else ++counter;
+   }
+   return integer;
+}
+
+
+/**
+ * Formats the decimal part of a number using format '.xxx xxx xxx'. E.g. '.100 000 0'
+ * @param {string} decimal Represents the decimal part, in a string
+ * @returns formmated number
+ */
+function formatDecimal(decimal){
+   let counter = 1;
+   for(let index = 1 ; index < decimal.length ; ++index ){
+      if(counter == 3){
+         decimal = decimal.substring(0, index) + ' ' + decimal.substring(index);
+         counter = 0;
+      }
+      else ++counter;
+   }
+   return decimal;
+}
 
 
 /**
@@ -73,7 +129,7 @@ function prepareRow(row, article){
    cellDescription.appendChild(document.createTextNode(article.description));
 
    var cellPrice = row.insertCell();
-   cellPrice.appendChild(document.createTextNode(article.price ));
+   cellPrice.appendChild(document.createTextNode( "$" + formatNumber( String(article.price) )));
    cellPrice.classList.add('text-center');
 
    var cellIVA = row.insertCell();
@@ -93,7 +149,7 @@ function prepareRow(row, article){
       form.setAttribute('article-code', article.code);
       form.querySelector('#code').value = article.code;
       form.querySelector('#description').value = article.description;
-      form.querySelector('#price').value = "$" + article.price;
+      form.querySelector('#price').value = "$" + formatNumber(String(article.price));
       form.querySelector('#stock').value = article.stock;
       form.querySelector('#iva').value = article.iva;
    });
