@@ -42,53 +42,44 @@ function cleanPrice(number){
 }
 
 /**
- * Formats a number using 3 digits separation
+ * Formats a number using 3 digits grouping
  * @param {string} number Represents a float number in a string
+ * @param {string} thousandSeparator Character or string used to group numbers for a better reading
+ * @param {boolean} pointSeparator If true, point is the decimal separator, if not, the comma.
+ * @returns the formatted number
  */
-function formatNumber(number){
-   const decimalSeparatorIndex = number.indexOf('.');
+function formatNumber(number, thousandSeparator = ' ', pointSeparator = true){
+   const decimalSeparatorIndex = pointSeparator ? number.indexOf('.') : number.indexOf(',');
    if( decimalSeparatorIndex != -1 ){
       const integerPart = number.substring(0, decimalSeparatorIndex );
       const decimalPart = number.substring(decimalSeparatorIndex + 1);
-      return formatInteger(integerPart) + '.' + formatDecimal(decimalPart);
+      return formatInteger(integerPart, thousandSeparator) + (pointSeparator ? '.' : ',') + formatDecimal(decimalPart, thousandSeparator);
    }
-   else return formatInteger(number);
+   else return formatInteger(number, thousandSeparator);
 }
 
 
 /**
- * Formats the integer part of a number using format 'xx xxx xxx'. E.g. '1 000 000'
- * @param {string} integer Represents the integer part, in a string
- * @returns formatted number
+ * Formats the integer part of a number using 3 digits groups
+ * @param {string} integer 
+ * @param {string} thousandSeparator Character or string used to group numbers for a better reading
+ * @returns the formatted number
  */
-function formatInteger(integer){
-   let counter = 0;
-   for(let index = integer.length ; index > 0 ; --index ){
-      if(counter == 3){
-         integer = integer.substring(0, index) + ' ' + integer.substring(index);
-         counter = 1;
-      }
-      else ++counter;
-   }
-   return integer;
+function formatInteger(integer, thousandSeparator){
+   if(integer.length <= 3) return integer;
+   else return formatInteger(integer.substring(0, integer.length - 3), thousandSeparator) + thousandSeparator + integer.substring(integer.length - 3);
 }
 
 
 /**
- * Formats the decimal part of a number using format '.xxx xxx xxx'. E.g. '.100 000 0'
- * @param {string} decimal Represents the decimal part, in a string
- * @returns formmated number
+ * Formats the decimal part of a number using 3 digits groups
+ * @param {string} integer 
+ * @param {string} thousandSeparator Character or string used to group numbers for a better reading
+ * @returns the formatted number
  */
-function formatDecimal(decimal){
-   let counter = 1;
-   for(let index = 1 ; index < decimal.length ; ++index ){
-      if(counter == 3){
-         decimal = decimal.substring(0, index) + ' ' + decimal.substring(index);
-         counter = 0;
-      }
-      else ++counter;
-   }
-   return decimal;
+function formatDecimal(decimal, thousandSeparator){
+   if(decimal.length <= 3) return decimal;
+   else return decimal.substring(0, 3) + thousandSeparator + formatDecimal( decimal.substring(3), thousandSeparator );
 }
 
 
