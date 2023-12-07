@@ -22,8 +22,7 @@ const modal = new bootstrap.Modal('#form');
    });
 
    document.querySelector('#insert-btn').addEventListener('click', () => {
-      const json = toJSON(Object.fromEntries(new FormData(form).entries()));
-      postArticle(json);
+      postArticle( toJSON(Object.fromEntries(new FormData(form).entries())) );
       reloadTable();
    });
 
@@ -169,6 +168,7 @@ async function getArticles(){
       .then( response => response.json() )
       .then( articles => articles.map( article => array.push(article)) )
       .catch( err => console.log("Solicitud fallida", err));
+   console.log(array);
    return array;
 }
     
@@ -180,7 +180,7 @@ async function getArticles(){
  * @returns the article in json format
  */
 function toJSON(article){
-   article.price = parseFloat(article.price);
+   article.price = parseFloat(cleanPrice(article.price));
    article.iva = parseFloat(article.iva);
    article.stock = parseInt(article.stock);
    return article;
