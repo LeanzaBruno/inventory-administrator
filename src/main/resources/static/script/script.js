@@ -1,8 +1,13 @@
 const API_URL = "http://localhost:8080/api/articles";
 const form = document.querySelector('#form');
 const modal = new bootstrap.Modal('#form');
+const tableTitles = document.querySelector("#table-titles");
+const noArticlesMsg = document.querySelector("#no-articles");
+
 
 ( () => {
+   document.querySelector('#search').addEventListener('keyup', event => searchArticle(event.target.value) );
+
    document.querySelector('#add-button').addEventListener('click', () => {
       form.classList.remove('edit-mode');
       form.classList.add('create-mode');
@@ -34,6 +39,62 @@ const modal = new bootstrap.Modal('#form');
    reloadTable();
 })();
 
+
+
+function searchArticle(criteria){
+   const tbody = document.querySelector('#tbody');
+
+   for(row of tbody.rows ){
+      const description = row.querySelector('td').textContent.toLowerCase();
+      if(description.includes(criteria.toLowerCase()))
+         show(row);
+      else
+         hide(row);
+   }
+
+   if( tbody.querySelectorAll('.d-none').length == tbody.rows.length )
+      showNoArticlesMessage();
+   else
+      showTableTitles();
+}
+
+
+/**
+ * Shows a message that no articles were found
+ */
+function showNoArticlesMessage(){
+   show(noArticlesMsg);
+   hide(tableTitles);
+}
+
+
+/**
+ * Show table titles
+ */
+function showTableTitles(){
+   show(tableTitles);
+   hide(noArticlesMsg);
+}
+
+
+/**
+ * Hides an element
+ * @param {*} element Element to be hidden
+ */
+function hide(element){
+   element.classList.add("d-none");
+   element.classList.remove("visible");
+}
+
+
+/**
+ * Makes an element visible
+ * @param {*} element Element to be showed
+ */
+function show(element){
+   element.classList.add("visible");
+   element.classList.remove("d-none");
+}
 
 
 function cleanPrice(number){
@@ -87,6 +148,7 @@ function formatDecimal(decimal, thousandSeparator){
  * @param {*} articles 
  */
 function reloadTable(){
+   document.querySelector('#search').value = '';
    modal.hide();
    clearTable();
    getArticles().then(response => response.map( article => prepareRow(tbody.insertRow(), article) ));
@@ -168,7 +230,6 @@ async function getArticles(){
       .then( response => response.json() )
       .then( articles => articles.map( article => array.push(article)) )
       .catch( err => console.log("Solicitud fallida", err));
-   console.log(array);
    return array;
 }
     

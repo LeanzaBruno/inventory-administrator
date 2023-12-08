@@ -16,11 +16,14 @@
         <div class="row">
             <table id="table" class="table table-hover table-striped-columns col">
                 <thead>
-                    <tr>
+                    <tr id="table-titles">
                         <th scope="col">Descripción</th>
                         <th scope="col" class="text-center">Precio ($)</th>
                         <th scope="col" class="text-center">IVA (%)</th>
                         <th scope="col" class="text-center">Stock (unidades)</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4" id="no-articles" class="text-center h3 d-none">No se encontraron artículos</th>
                     </tr>
                 </thead>
                 <tbody id="tbody" class="align-middle">
