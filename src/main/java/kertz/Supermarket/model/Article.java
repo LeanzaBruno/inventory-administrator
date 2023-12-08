@@ -24,7 +24,7 @@ public class Article {
 
     public int getCode() { return code; }
 
-    public float getPrice() { return (1 + iva) * price; }
+    public float getPrice() { return price; }
 
     public String getDescription() { return description; }
 
