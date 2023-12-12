@@ -8,6 +8,12 @@ const noArticlesMsg = document.querySelector("#no-articles");
 ( () => {
    document.querySelector('#search').addEventListener('keyup', event => searchArticle(event.target.value) );
 
+   document.querySelector("#clear-button").addEventListener("click", () => {
+      document.querySelector("#search").value = ''; 
+      searchArticle('');
+   });
+
+
    document.querySelector('#add-button').addEventListener('click', () => {
       form.classList.remove('edit-mode');
       form.classList.add('create-mode');
