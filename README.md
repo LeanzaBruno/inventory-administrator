@@ -1,3 +1,5 @@
-# Supermarket
+# Inventory administrator
 
-Un pequeño proyecto que modela la organización de un catálogo de un supermercado hecho con Spring
+Backend of a little system that started as a final project for a java bootcamp. It basic consists in an inventory administration system.
+
+Backend is built with Spring Boot + PostgreSQL.
