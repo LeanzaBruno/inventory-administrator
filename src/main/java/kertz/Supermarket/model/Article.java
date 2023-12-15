@@ -13,6 +13,14 @@ public class Article {
     private int ivaPercentage;
     private int stock;
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "article_category",
+            joinColumns = @JoinColumn(name = "article_code"),
+            inverseJoinColumns = @JoinColumn(name = "category_name"))
+    private Set<Category> categories;
+
     public Article(){}
     public Article(int code, String description, float wholesalerPrice, int gainPercentage, int ivaPercentage, int stock) {
         this.code = code;
