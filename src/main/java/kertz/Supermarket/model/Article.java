@@ -2,6 +2,8 @@ package kertz.Supermarket.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Article {
     @Id
