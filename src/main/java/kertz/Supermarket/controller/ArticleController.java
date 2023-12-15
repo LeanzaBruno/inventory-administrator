@@ -27,24 +27,21 @@ public class ArticleController {
         return repository.save(newArticle);
     }
 
-    @PutMapping("/articles/{id}")
-    public Article updateArticle(@PathVariable int id, @RequestBody Article article){
-        Article updateArticle = repository.findById(id).orElseThrow( () -> new ArticleNotFoundException(id) );
-        updateArticle.setDescription(article.getDescription());
-        updateArticle.setPrice(article.getPrice());
-        updateArticle.setIVA(article.getIVA());
-        updateArticle.setStock(article.getStock());
+    @PutMapping("/articles/{code}")
+    public Article updateArticle(@PathVariable int code, @RequestBody Article article){
+        Article updateArticle = repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
+        updateArticle.copyFrom(article);
         repository.save(updateArticle);
         return updateArticle;
     }
 
-    @GetMapping("/articles/{id}")
-    Article getArticle(@PathVariable int id){
-        return repository.findById(id).orElseThrow( () -> new ArticleNotFoundException(id));
+    @GetMapping("/articles/{code}")
+    Article getArticle(@PathVariable int code){
+        return repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code));
     }
 
-    @DeleteMapping("/articles/{id}")
-    void deleteArticle(@PathVariable int id){
-        repository.deleteById(id);
+    @DeleteMapping("/articles/{code}")
+    void deleteArticle(@PathVariable int code){
+        repository.deleteById(code);
     }
 }
