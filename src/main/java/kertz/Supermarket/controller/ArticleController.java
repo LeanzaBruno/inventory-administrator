@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class ArticleController {
     private ArticleRepository repository;
 
@@ -28,7 +28,7 @@ public class ArticleController {
     }
 
     @PutMapping("/articles/{code}")
-    public Article updateArticle(@PathVariable int code, @RequestBody Article article){
+    public Article updateArticle(@PathVariable long code, @RequestBody Article article){
         Article updateArticle = repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
         updateArticle.copyFrom(article);
         repository.save(updateArticle);
@@ -36,12 +36,12 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{code}")
-    Article getArticle(@PathVariable int code){
+    Article getArticle(@PathVariable long code){
         return repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code));
     }
 
     @DeleteMapping("/articles/{code}")
-    void deleteArticle(@PathVariable int code){
+    void deleteArticle(@PathVariable long code){
         repository.deleteById(code);
     }
 }
