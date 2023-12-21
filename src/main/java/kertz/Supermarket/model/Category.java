@@ -2,20 +2,19 @@ package kertz.Supermarket.model;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
+import javax.annotation.processing.Generated;
 
 @Entity
 public class Category {
    @Id
-   private String name;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private int id;
 
-   @ManyToMany(mappedBy = "categories")
-   private Set<Article> articles;
+   @Column(length = 100)
+   private String name;
 
    public Category() { }
    public Category(String name) { this.name = name; }
 
-   String getName(){ return name; }
-
-   void setName(String name) { this.name = name; }
+   public String getName(){ return name; }
 }
