@@ -1,8 +1,8 @@
 package kertz.Supermarket.model;
 
 import jakarta.persistence.*;
-
-import javax.annotation.processing.Generated;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -13,8 +13,22 @@ public class Category {
    @Column(length = 100)
    private String name;
 
-   public Category() { }
-   public Category(String name) { this.name = name; }
+   @ManyToMany(mappedBy = "categories")
+   private Set<Article> articles = new HashSet<>();
 
+
+   public Category() { }
+
+   public int getId() { return id; }
    public String getName(){ return name; }
+
+   public void setName(String name){ this.name = name; }
+
+   public boolean hasArticlesRelated(){
+      return !articles.isEmpty();
+   }
+
+   public void copy(Category otherCategory){
+      this.name = otherCategory.name;
+   }
 }
