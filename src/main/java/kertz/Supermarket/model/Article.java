@@ -3,10 +3,12 @@ package kertz.Supermarket.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashSet;
 import java.util.Set;
+import lombok.Data;
 
+@Data
 @Entity
-//@Check(constraints = "title <> '', description <> '', brand <> '', stock > 0, wholesaler_price > 0, gain_percentage > 0")
 public class Article {
     private static final char PRECISION = 8;
     private static final char SCALE = 2;
@@ -39,68 +41,12 @@ public class Article {
 
     @ManyToMany
     @JoinTable(name = "article_category",
-               joinColumns = @JoinColumn(name = "article_code"),
-               inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+            joinColumns = @JoinColumn(name = "article_code"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public Article(){}
-
-    /*
-    public Article(int code,
-                   String title,
-                   String description,
-                   String brand,
-                   float purchaseGrossPrice,
-                   VAT vat,
-                   float gainPercentage,
-                   int stock) {
-        this.code = code;
-        this.title = title;
-        this.description = description;
-        this.brand = brand;
-        this.stock = stock;
-        this.purchaseGrossPrice = BigDecimal.valueOf(purchaseGrossPrice);
-        this.vat = vat;
-        this.gainPercentage = BigDecimal.valueOf(gainPercentage);
-    }
-     */
-
-    /**
-     * Returns the article's code
-     * @return the code
-     */
-    public long getCode() { return code; }
-
-    /**
-     * Returns the article's title
-     * @return the title
-     */
-    public String getTitle() { return title; }
-
-    /**
-     * Returns the article's description
-     * @return the description
-     */
-    public String getDescription() { return description; }
-
-    /**
-     * Returns the categories which the article belongs from
-     * @return A collection containing the categories
-     */
-    public Set<Category> getCategories(){ return categories; }
-
-    /**
-     * Returns the gross price of the buy
-     * @return the price
-     */
-    public BigDecimal getPurchaseGrossPrice() { return purchaseGrossPrice; }
-
-    /**
-     * Returns the gain percentage of the article
-     * @return the gain percentage
-     */
-    public BigDecimal getGainPercentage() { return gainPercentage; }
-
+    
     /**
      * Returns the value of the value-added tax
      * @return the rate
@@ -157,11 +103,18 @@ public class Article {
      */
     public BigDecimal getVatDifference() { return getVatDebit().subtract(getVatCredit()); }
 
-    public void copyFrom(Article otherArticle){
-        this.title = otherArticle.title;
-        this.description = otherArticle.description;
-        this.brand = otherArticle.brand;
-        this.stock = otherArticle.stock;
-        //this.categories = Set.copyOf(otherArticle.categories);
+    /**
+     * Removes a category from the article's category
+     * @param category
+     */
+    public void removeCategory(Category category){ categories.remove(category); }
+
+    public void copy(Article otherArticle){
+        if(otherArticle.title != null) this.title = otherArticle.title;
+        if(otherArticle.description != null) this.description = otherArticle.description;
+        if(otherArticle.brand != null) this.brand = otherArticle.brand;
+        if(otherArticle.categories != null) this.categories = Set.copyOf(otherArticle.categories);
+        if(otherArticle.gainPercentage != null) this.gainPercentage = otherArticle.gainPercentage;
+        if(otherArticle.vat != null) this.vat = otherArticle.vat;
     }
 }
