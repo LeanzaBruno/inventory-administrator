@@ -25,7 +25,6 @@ public class CategoryController {
 
     @PostMapping
     public void newCategory(@RequestBody Category category){
-        category.setName(category.getName().toLowerCase());
         repository.save(category);
     }
 

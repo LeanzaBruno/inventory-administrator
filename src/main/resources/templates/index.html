@@ -48,12 +48,12 @@
                     </tr>
                 </thead>
                 <tbody id="tbody" class="align-middle text-center">
-                    <tr th:each="article: ${articles}">
-                        <td th:text="${article.title}"/>
-                        <td th:text="${article.vatRate}"/>
-                        <td th:text="${article.gainPercentage}"/>
-                        <td th:text="${article.saleGrossPrice}"/>
-                        <td th:text="${article.stock}"/>
+                    <tr th:each="art: ${articles}">
+                        <td th:text="${art.title}">
+                        <td th:text="${art.vatRate}"/>
+                        <td th:text="${art.gainPercentage}"/>
+                        <td th:text="${art.saleGrossPrice}"/>
+                        <td th:text="${art.stock}"/>
                     </tr>
                 </tbody>
             </table>

@@ -18,9 +18,15 @@ public class VAT {
 
     public VAT(){ }
 
-    public VAT(BigDecimal rate){ this.rate = rate; }
+    public VAT(float rate){ this.rate = BigDecimal.valueOf(rate); }
+    public VAT(int rate){ this.rate = BigDecimal.valueOf(rate); }
 
     public BigDecimal getRate() { return rate; }
 
     public String getDescription() { return description; }
+
+    @Override
+    public String toString() {
+        return "{\"rate\": "  + this.rate + ", \"description\": " + this.description + "}";
+    }
 }

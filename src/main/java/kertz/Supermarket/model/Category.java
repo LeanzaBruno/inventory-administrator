@@ -22,13 +22,16 @@ public class Category {
    public int getId() { return id; }
    public String getName(){ return name; }
 
-   public void setName(String name){ this.name = name; }
-
    public boolean hasArticlesRelated(){
       return !articles.isEmpty();
    }
 
    public void copy(Category otherCategory){
       this.name = otherCategory.name;
+   }
+
+   @Override
+   public String toString() {
+      return "{\"id\": "  + this.id + ", \"name\": " + this.name + "}";
    }
 }

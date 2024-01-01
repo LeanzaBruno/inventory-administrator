@@ -1,28 +1,21 @@
 package kertz.Supermarket.controller;
 
-import kertz.Supermarket.exception.ArticleNotFoundException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import kertz.Supermarket.model.Article;
-import kertz.Supermarket.repository.ArticleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
-@RestController
-@RequestMapping("/")
+@Controller
+@RequestMapping("/article")
 public class ArticleController {
-    private ArticleRepository repository;
-
-    @Autowired
-    ArticleController(ArticleRepository repository){
-        this.repository = repository;
-    }
-
-    @GetMapping("/articles")
-    public List<Article> getArticles(){
-        return repository.findAll();
-    }
-
-    @PostMapping("/articles")
+	
+	@GetMapping
+	public String showPage(Article article) {
+		return "article";
+	}
+	
+    /*
+    @PostMapping
     public Article newArticle(@RequestBody Article newArticle){
         return repository.save(newArticle);
     }
@@ -30,7 +23,8 @@ public class ArticleController {
     @PutMapping("/articles/{code}")
     public Article updateArticle(@PathVariable long code, @RequestBody Article article){
         Article updateArticle = repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
-        updateArticle.copyFrom(article);
+        System.out.println(article);
+        updateArticle.copy(article);
         repository.save(updateArticle);
         return updateArticle;
     }
@@ -44,4 +38,7 @@ public class ArticleController {
     void deleteArticle(@PathVariable long code){
         repository.deleteById(code);
     }
+    */
+
+
 }
