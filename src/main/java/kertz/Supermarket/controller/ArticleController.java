@@ -3,8 +3,10 @@ package kertz.Supermarket.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import kertz.Supermarket.model.Article;
@@ -24,6 +26,12 @@ public class ArticleController {
 		model.addAttribute("article", article);
 		return "article";
 	}
+
+    @PostMapping("/{code}/delete")
+    String deleteArticle(@PathVariable long code){
+        repository.deleteById(code);
+        return "redirect:/";
+    }
 	
     /*
     @PutMapping
@@ -46,10 +54,6 @@ public class ArticleController {
         return repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code));
     }
 
-    @DeleteMapping("/articles/{code}")
-    void deleteArticle(@PathVariable long code){
-        repository.deleteById(code);
-    }
     */
 
 
