@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import kertz.Supermarket.model.Article;
 import kertz.Supermarket.repository.ArticleRepository;
+import kertz.Supermarket.repository.VATRepository;
 import kertz.Supermarket.exception.ArticleNotFoundException;
 
 @Controller
@@ -18,19 +19,35 @@ import kertz.Supermarket.exception.ArticleNotFoundException;
 public class ArticleController {
 
 	@Autowired
-	private ArticleRepository repository;
+	private ArticleRepository articlesRepository;
+	
+	@Autowired
+	private VATRepository vatRepository;
 	
 	@GetMapping("/{code}")
 	public String showPage(@PathVariable long code, Model model) {
-        Article article = repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
+        Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
 		model.addAttribute("article", article);
 		return "article";
 	}
 
     @PostMapping("/{code}/delete")
     String deleteArticle(@PathVariable long code){
-        repository.deleteById(code);
+        articlesRepository.deleteById(code);
         return "redirect:/";
+    }
+    
+    @GetMapping("/new")
+    String showCreatePage(Model model) {
+    	model.addAttribute("vats", vatRepository.findAll());
+    	model.addAttribute("article", new Article());
+    	return "new";
+    }
+    
+    @PostMapping("/new")
+    String createArticle(Article article) {
+    	articlesRepository.save(article);
+    	return "redirect:/";
     }
 	
     /*

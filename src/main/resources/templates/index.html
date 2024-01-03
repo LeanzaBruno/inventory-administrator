@@ -32,7 +32,11 @@
                     </button>
                 </div>
             </div>
-            <button type="button" id="add-button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#form">Nuevo artículo</button>
+			<form action="/article/new" method="get" class="col-2">
+            	<button type="submit" class="btn btn-primary">
+					Nuevo artículo
+				</button>
+			</form>
         </div>
     </nav>
     <div class="container-fluid">
@@ -60,55 +64,6 @@
         </div>
     </div>
 
-    <form class="modal fade" id="form" tabindex="-1" article-index="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-floating code mb-3">
-                        <input type="text" readonly class="form-control" id="code" name="code" placeholder="code">
-                        <label for="code">Código</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <textarea  class="form-control" id="description" name="description" placeholder="description"></textarea>
-                        <label for="description">Descripción</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="price" name="price" placeholder="price">
-                        <label for="price">Precio</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="stock" name="stock" min="0" placeholder="stock">
-                        <label for="stock">Stock</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <select class="form-select mb-3" name="iva">
-                            <option selected value="21.1">Estándar - 21%</option>
-                            <option value="27.0">Aumentado - 27%</option>
-                            <option value="10.5">Reducido - 10.5%</option>
-                            <option value="2.50">Super reducido - 2.5%</option>
-                        </select>
-                        <label for="iva">IVA</label>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" id="delete-btn">Eliminar artículo</button>
-                    <button type="button" class="btn btn-primary" id="update-btn">Guardar cambios</span></button>
-                    <button type="button" class="btn btn-primary" id="insert-btn">Añadir al inventario</span></button>
-                </div>
-            </div>
-        </div>
-    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
