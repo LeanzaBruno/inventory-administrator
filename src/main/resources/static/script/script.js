@@ -1,11 +1,19 @@
-const API_URL = "http://localhost:8080/api/articles";
-const form = document.querySelector('#form');
-const modal = new bootstrap.Modal('#form');
 const tableTitles = document.querySelector("#table-titles");
 const noArticlesMsg = document.querySelector("#no-articles");
 
 
 ( () => {
+   /*
+   let rows = document.querySelect(".tr");
+   rows.map(r => r.addEventListener('click', event => {
+      let code = r.dataset.code;
+      window.location 
+
+      
+
+   }));
+   */
+
    document.querySelector('#search').addEventListener('keyup', event => searchArticle(event.target.value) );
 
    document.querySelector("#clear-button").addEventListener("click", () => {
@@ -13,36 +21,10 @@ const noArticlesMsg = document.querySelector("#no-articles");
       searchArticle('');
    });
 
-
-   document.querySelector('#add-button').addEventListener('click', () => {
-      form.classList.remove('edit-mode');
-      form.classList.add('create-mode');
-      clearForm();
-   });
-
-   document.querySelector('#delete-btn').addEventListener('click', () => {
-      if(!confirm("Seguro que desea eliminar permanentemente este artículo?")) return;
-      deleteArticle(form.getAttribute('article-code'));
-      reloadTable();
-   });
-
-   document.querySelector('#update-btn').addEventListener('click', () => {
-      const json = toJSON(Object.fromEntries(new FormData(form).entries()));
-      putArticle(form.getAttribute('article-code'), json);
-      reloadTable();
-   });
-
-   document.querySelector('#insert-btn').addEventListener('click', () => {
-      postArticle( toJSON(Object.fromEntries(new FormData(form).entries())) );
-      reloadTable();
-   });
-
-
    document.querySelector('#price').addEventListener('keyup', event => {
       event.target.value = "$ " + formatNumber(cleanPrice(event.target.value));
    });
 
-   reloadTable();
 })();
 
 
