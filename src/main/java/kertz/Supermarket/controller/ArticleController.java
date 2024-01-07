@@ -3,17 +3,14 @@ package kertz.Supermarket.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import kertz.Supermarket.model.Article;
 import kertz.Supermarket.repository.ArticleRepository;
 import kertz.Supermarket.repository.VATRepository;
+import lombok.extern.slf4j.Slf4j;
 import kertz.Supermarket.exception.ArticleNotFoundException;
 
+@Slf4j
 @Controller
 @RequestMapping("/article")
 public class ArticleController {
@@ -26,12 +23,32 @@ public class ArticleController {
 	
 	@GetMapping("/{code}")
 	public String showPage(@PathVariable long code, Model model) {
+        log.info("Código: " + code);
         Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
+    	model.addAttribute("vats", vatRepository.findAll());
 		model.addAttribute("article", article);
+		model.addAttribute("backupArticle", article);
 		return "article";
 	}
 
-    @PostMapping("/{code}/delete")
+    /**
+     * Updates articles
+     * @param code
+     * @param updatedArticle
+     * @return the view
+     */
+	@PostMapping("/{code}")
+	public String showPage(@PathVariable long code, Article updatedArticle) {
+        log.info("Articulo que llega del formulario: " + updatedArticle);
+        Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
+        log.info("Articulo en la base de datos: " + article);
+        article.copy(updatedArticle);
+        log.info("Articulo en la base de datos: " + article);
+        articlesRepository.save(article);
+		return "redirect:/";
+	}
+
+    @PostMapping("/delete/{code}")
     String deleteArticle(@PathVariable long code){
         articlesRepository.deleteById(code);
         return "redirect:/";
@@ -51,14 +68,6 @@ public class ArticleController {
     }
 	
     /*
-    @PutMapping
-    public String saveArticle(Article article){
-        Article updateArticle = repository.findById(article.getCode()).orElseThrow( () -> new ArticleNotFoundException(code) );
-        updateArticle.copy(article);
-        repository.save(updateArticle);
-		return "/article";
-    }
-
     @PutMapping("/articles/{code}")
     public Article updateArticle(@PathVariable long code, @RequestBody Article article){
         System.out.println(article);

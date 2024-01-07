@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import org.hibernate.annotations.Check;
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Entity
+@Data
 @Check(constraints = "rate >= 0")
 public class VAT {
     @Id
@@ -14,19 +16,8 @@ public class VAT {
     private BigDecimal rate;
 
     @Column(nullable = false)
+    private String type;
+
+    @Column(nullable = false)
     private String description;
-
-    public VAT(){ }
-
-    public VAT(float rate){ this.rate = BigDecimal.valueOf(rate); }
-    public VAT(int rate){ this.rate = BigDecimal.valueOf(rate); }
-
-    public BigDecimal getRate() { return rate; }
-
-    public String getDescription() { return description; }
-
-    @Override
-    public String toString() {
-        return "{\"rate\": "  + this.rate + ", \"description\": " + this.description + "}";
-    }
 }

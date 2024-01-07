@@ -7,120 +7,110 @@
     <title>Detalles de artículo</title>
 </head>
 <body class="vh-100">
-    <nav class="navbar bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="img/warehouse.png" height="50">
-            </a>
-            <div class="collapse">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active" aria-current="page">Artículos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Ventas</a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="col-4">
-                <div class="input-group">
-                    <input type="search" class="form-control" id="search" placeholder="Buscar artículo">
-                    <button type="button" class="btn btn-outline-secondary" id="clear-button">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <button type="button" id="add-button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#form">Nuevo artículo</button>
-        </div>
-    </nav>
-    
+    <!-- NAVBAR IN PROCESS -->
+
+
     <main class="container">
-    	<form class="row my-3" th:object="${article}" method="post">
-            <div class="mb-3">
-                <label for="code" class="form-label">Código de inventario</label>
-                <input type="text" class="form-control" id="code" readonly th:field="*{code}">
-            </div>
+        <div class="row">
+            <form class="col my-3" th:object="${article}" method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="code" placeholder="code" th:field="*{code}" readonly>
+                    <label for="code">Código de inventario</label>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="title" placeholder="Titulo" th:field="*{title}" required>
-                <label for="title">Título</label>
-            </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="title" placeholder="title" th:field="*{title}" required>
+                    <label for="title">Título</label>
+                </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="brand" placeholder="Marca" th:field="*{brand}">
-                <label for="brand">Marca</label>
-            </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="brand" placeholder="brand" th:field="*{brand}">
+                    <label for="brand">Marca</label>
+                </div>
 
-            <div class="form-floating mb-3">
-                <textarea class="form-control" id="description" rows="5" placeholder="descripción" th:field="*{description}">
-                </textarea>
-                <label for="description">Descripción</label>
-            </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="description" rows="5" placeholder="descripción" th:field="*{description}">
+                    </textarea>
+                    <label for="description">Descripción</label>
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Ganancia</span>
-				<input type="text" class="form-control" id="description" th:field="*{gainPercentage}">
-                <span class="input-group-text">%</span>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Ganancia</span>
+                    <input type="text" class="form-control" id="description" th:field="*{gainPercentage}">
+                    <span class="input-group-text">%</span>
+                </div>
 
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="vat">IVA</label>
-                <select class="form-select" id="vat">
-                    <option>0 %</option>
-                    <option>10.5 %</option>
-                    <option>21 %</option>
-                    <option>27 %</option>
-                </select>
-            </div>
+				<div class="form-floating mb-3">
+					<select class="form-select mb-3" name="iva" th:field="*{vatPercentage}" required>
+						<option th:each="vat: ${vats}" 
+                                th:value="${vat.rate}" 
+                                th:text="${vat.rate} + '%    '+ ${vat.type} + '  ' + ${vat.description}"
+                                th:selected="${article.vatPercentage}"></option>
+					</select>
+					<label for="iva">IVA</label>
+				</div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Stock</span>
-				<input type="text" class="form-control" id="stock" th:field="*{stock}">
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Stock</span>
+                    <input type="text" class="form-control" id="stock" th:field="*{stock}">
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Precio de compra (bruto)</span>
-				<input type="text" class="form-control" id="purchase-gross-price" th:field="*{purchaseGrossPrice}">
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Precio de compra (bruto)</span>
+                    <input type="text" class="form-control" id="purchase-gross-price" th:field="*{purchaseGrossPrice}">
+                </div>
 
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Precio de compra (neto)</span>
-				<input type="text" class="form-control" id="purchase-net-price" th:field="*{purchaseNetPrice}" readonly>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Precio de compra (neto)</span>
+                    <input type="text" class="form-control" id="purchase-net-price" th:field="*{purchaseNetPrice}" readonly>
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Precio de venta (neto)</span>
-				<input type="text" class="form-control" id="sale-net-price" th:field="*{saleNetPrice}" readonly>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Precio de venta (neto)</span>
+                    <input type="text" class="form-control" id="sale-net-price" th:field="*{saleNetPrice}" readonly>
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Precio de venta (bruto)</span>
-				<input type="text" class="form-control" id="sale-gross-price" th:field="*{saleGrossPrice}" readonly>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Precio de venta (bruto)</span>
+                    <input type="text" class="form-control" id="sale-gross-price" th:field="*{saleGrossPrice}" readonly>
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Crédito fiscal</span>
-				<input type="text" class="form-control" id="credit" th:field="*{vatCredit}" readonly>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Crédito fiscal</span>
+                    <input type="text" class="form-control" id="credit" th:field="*{vatCredit}" readonly>
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Débito fiscal</span>
-				<input type="text" class="form-control" id="debit" th:field="*{vatDebit}" readonly>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Débito fiscal</span>
+                    <input type="text" class="form-control" id="debit" th:field="*{vatDebit}" readonly>
+                </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">Diferencia</span>
-				<input type="text" class="form-control" id="difference" th:field="*{vatDifference}" readonly>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Diferencia</span>
+                    <input type="text" class="form-control" id="difference" th:field="*{vatDifference}" readonly>
+                </div>
 
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary me-3" disabled>Deshacer cambios</button>
-				<button type="submit" class="btn btn-success me-3" th:formaction="@{/save}" disabled>Guardar cambios</button>
-				<button type="submit" class="btn btn-danger" th:formaction="@{{code}/delete(code=${article.code})}">Eliminar artículo</button>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-secondary me-3" disabled>Deshacer cambios</button>
+                    <button type="submit" class="btn btn-success me-3">Guardar cambios</button>
+                    <button type="submit" class="btn btn-danger" th:formaction="@{{code}/delete(code=${article.code})}">Eliminar artículo</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="toast" role="alert">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-    	</form>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

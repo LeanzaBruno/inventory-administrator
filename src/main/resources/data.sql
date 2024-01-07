@@ -1,15 +1,9 @@
-DROP FROM article;
-DROP FROM vat;
-DROP FROM category;
-DROP FROM article_category;
-
-
-INSERT INTO vat (rate, description) VALUES 
-(27, 'IVA GENERAL: telecomunicaciones, agua, electricidad y gas'),
-(21, 'IVA Reducido I: mayoría de bienes y servicios'),
-(10.5, 'IVA Reducido II: servicios médicos, frutas, verduras, carnes, transporte público y taxi'),
-(2.5, 'IVA Superreducido: importación, periódicos, revistas impresas o digitales'),
-(0.0, 'No IVA');
+INSERT INTO VAT (rate, type, description) VALUES 
+(27,'IVA GENERAL', 'Telecomunicaciones, agua, electricidad y gas'),
+(21, 'IVA Reducido I', 'Mayoría de bienes y servicios'),
+(10.5, 'IVA Reducido II', 'Servicios médicos, frutas, verduras, carnes, transporte público y taxi'),
+(2.5, 'IVA Superreducido', 'Importación, periódicos, revistas impresas o digitales'),
+(0.0, 'No IVA', 'Bienes o servicios que contribuyen al bien común de la sociedad');
 
 INSERT INTO category (name) VALUES
 ('lácteos'),
@@ -19,7 +13,7 @@ INSERT INTO category (name) VALUES
 ('juguetería'),
 ('limpieza');
 
-INSERT INTO article (title, brand, description, purchase_gross_price, vat_rate, gain_percentage, stock) VALUES
+INSERT INTO article (title, brand, description, purchase_gross_price, vat_percentage, gain_percentage, stock) VALUES
 ('Yogurt La serenisima 500 ml', 'La Serenisima', 'Yogurt la serenisma', 500, 0, 30, 10),
 ('KitKat chocolate', 'KitKat', 'Kitkat de cocholate 200gr', 300, 27, 50, 30),
 ('Lavandina para lavar', 'Lavandina', 'Lavandina para el hogar', 630, 2.5, 40, 20),

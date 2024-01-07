@@ -55,7 +55,7 @@
                 <tbody id="tbody" class="align-middle text-center">
                     <tr th:each="art: ${articles}" th:attr="data-code = ${art.code}" class="position-relative">
                         <td th:text="${art.title}">
-                        <td th:text="${art.vatRate}"/>
+                        <td th:text="${art.vatPercentage}"/>
                         <td th:text="${art.gainPercentage}"/>
                         <td th:text="${art.saleGrossPrice}"/>
                         <td th:text="${art.stock}"/>

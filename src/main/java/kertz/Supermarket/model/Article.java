@@ -10,9 +10,11 @@ import lombok.Data;
 @Data
 @Entity
 public class Article {
-    private static final char PRECISION = 8;
+    private static final char PERCENTAGE_PRECISION = 4;
+    private static final char PRICE_PRECISION = 8;
     private static final char SCALE = 2;
     private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_DOWN;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long code;
@@ -29,14 +31,13 @@ public class Article {
     @Column(nullable = false)
     private int stock;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private VAT vat;
+    @Column(precision = PERCENTAGE_PRECISION, scale = SCALE, nullable = false)
+    private BigDecimal vatPercentage;
 
-    @Column(precision = PRECISION, scale = SCALE, nullable = false)
+    @Column(precision = PRICE_PRECISION, scale = SCALE, nullable = false)
     private BigDecimal purchaseGrossPrice;
 
-    @Column(precision = PRECISION, scale = SCALE, nullable = false)
+    @Column(precision = PERCENTAGE_PRECISION, scale = SCALE, nullable = false)
     private BigDecimal gainPercentage;
 
     @ManyToMany
@@ -46,12 +47,6 @@ public class Article {
     private Set<Category> categories = new HashSet<>();
 
     public Article(){}
-    
-    /**
-     * Returns the value of the value-added tax
-     * @return the rate
-     */
-    public BigDecimal getVatRate(){ return vat.getRate(); }
 
     /**
      * Returns the net price of the purchase (without vat)
@@ -60,7 +55,7 @@ public class Article {
     public BigDecimal getPurchaseNetPrice(){
         // netPrice = 100 * grossPrice / (100 + vat)
         BigDecimal numerator =  purchaseGrossPrice.multiply(BigDecimal.valueOf(100));
-        BigDecimal denominator = vat.getRate().add(BigDecimal.valueOf(100));
+        BigDecimal denominator = vatPercentage.add(BigDecimal.valueOf(100));
         return numerator.divide(denominator, SCALE, ROUNDING_MODE );
     }
 
@@ -87,7 +82,7 @@ public class Article {
      */
     public BigDecimal getSaleGrossPrice() {
         // saleGrossPrice = saleNetPrice * ( 1 + vatRate / 100), aux = 1 + vatRate / 100
-        BigDecimal aux = vat.getRate().divide( BigDecimal.valueOf(100), SCALE, ROUNDING_MODE ).add( BigDecimal.valueOf(1) );
+        BigDecimal aux = vatPercentage.divide( BigDecimal.valueOf(100), SCALE, ROUNDING_MODE ).add( BigDecimal.valueOf(1) );
         return getSaleNetPrice().multiply(aux);
     }
 
@@ -110,11 +105,12 @@ public class Article {
     public void removeCategory(Category category){ categories.remove(category); }
 
     public void copy(Article otherArticle){
-        if(otherArticle.title != null) this.title = otherArticle.title;
-        if(otherArticle.description != null) this.description = otherArticle.description;
+        this.title = otherArticle.title;
+        this.description = otherArticle.description;
+        this.gainPercentage = otherArticle.gainPercentage;
+        this.vatPercentage = otherArticle.vatPercentage;
+        this.stock = otherArticle.stock;
         if(otherArticle.brand != null) this.brand = otherArticle.brand;
-        if(otherArticle.categories != null) this.categories = Set.copyOf(otherArticle.categories);
-        if(otherArticle.gainPercentage != null) this.gainPercentage = otherArticle.gainPercentage;
-        if(otherArticle.vat != null) this.vat = otherArticle.vat;
+        this.categories = otherArticle.categories;
     }
 }
