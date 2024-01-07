@@ -39,11 +39,8 @@ public class ArticleController {
      */
 	@PostMapping("/{code}")
 	public String showPage(@PathVariable long code, Article updatedArticle) {
-        log.info("Articulo que llega del formulario: " + updatedArticle);
         Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
-        log.info("Articulo en la base de datos: " + article);
         article.copy(updatedArticle);
-        log.info("Articulo en la base de datos: " + article);
         articlesRepository.save(article);
 		return "redirect:/";
 	}
@@ -66,21 +63,4 @@ public class ArticleController {
     	articlesRepository.save(article);
     	return "redirect:/";
     }
-	
-    /*
-    @PutMapping("/articles/{code}")
-    public Article updateArticle(@PathVariable long code, @RequestBody Article article){
-        System.out.println(article);
-        repository.save(updateArticle);
-        return updateArticle;
-    }
-
-    @GetMapping("/articles/{code}")
-    Article getArticle(@PathVariable long code){
-        return repository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code));
-    }
-
-    */
-
-
 }
