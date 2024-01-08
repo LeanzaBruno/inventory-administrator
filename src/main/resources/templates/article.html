@@ -10,12 +10,11 @@
 
     <!-- NAVBAR IN PROCESS -->
 
-
     <main class="container">
         <div class="row">
-            <form class="col my-3" th:object="${article}" method="post">
+            <form class="col my-3" th:object="${article}" method="post" th:action="@{/article/update/{code}(code=${article.code})}">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="code" placeholder="code" th:field="*{code}" readonly>
+                    <input type="number" class="form-control" id="code" placeholder="code" th:field="*{code}" readonly>
                     <label for="code">Código de inventario</label>
                 </div>
 
@@ -35,10 +34,9 @@
                     <label for="description">Descripción</label>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Ganancia</span>
-                    <input type="text" class="form-control" id="description" th:field="*{gainPercentage}">
-                    <span class="input-group-text">%</span>
+                <div class="mb-3">
+                    <label class="form-label">Ganancia</label>
+                    <input type="text" class="form-control" id="description" th:field="*{gainPercentage}" required>
                 </div>
 
 				<div class="form-floating mb-3">
@@ -51,66 +49,74 @@
 					<label for="iva">IVA</label>
 				</div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Stock</span>
-                    <input type="text" class="form-control" id="stock" th:field="*{stock}">
+                <div class="mb-3">
+                    <span class="form-label">Stock</span>
+                    <input type="number" class="form-control" id="stock" th:field="*{stock}" min="0" required>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Precio de compra (bruto)</span>
-                    <input type="text" class="form-control" id="purchase-gross-price" th:field="*{purchaseGrossPrice}">
+                <div class="mb-3">
+                    <span class="form-label">Precio de compra (bruto)</span>
+                    <input type="text" class="form-control" id="purchase-gross-price" th:field="*{purchaseGrossPrice}" required>
                 </div>
 
+                <!-- -->
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Precio de compra (neto)</span>
+                <div class="mb-3">
+                    <span class="form-label">Precio de compra (neto)</span>
                     <input type="text" class="form-control" id="purchase-net-price" th:field="*{purchaseNetPrice}" readonly>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Precio de venta (neto)</span>
+                <div class="mb-3">
+                    <span class="form-label">Precio de venta (neto)</span>
                     <input type="text" class="form-control" id="sale-net-price" th:field="*{saleNetPrice}" readonly>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Precio de venta (bruto)</span>
+                <div class="mb-3">
+                    <span class="form-label">Precio de venta (bruto)</span>
                     <input type="text" class="form-control" id="sale-gross-price" th:field="*{saleGrossPrice}" readonly>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Crédito fiscal</span>
+                <div class="mb-3">
+                    <span class="form-label">Crédito fiscal</span>
                     <input type="text" class="form-control" id="credit" th:field="*{vatCredit}" readonly>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Débito fiscal</span>
+                <div class="mb-3">
+                    <span class="form-label">Débito fiscal</span>
                     <input type="text" class="form-control" id="debit" th:field="*{vatDebit}" readonly>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Diferencia</span>
+                <div class="mb-3">
+                    <span class="form-label">Diferencia</span>
                     <input type="text" class="form-control" id="difference" th:field="*{vatDifference}" readonly>
                 </div>
 
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-secondary me-3" disabled>Deshacer cambios</button>
                     <button type="submit" class="btn btn-success me-3">Guardar cambios</button>
-                    <button type="submit" class="btn btn-danger" th:formaction="@{{code}/delete(code=${article.code})}">Eliminar artículo</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">Eliminar artículo</button>
                 </div>
             </form>
         </div>
 
-        <div class="toast" role="alert">
-            <div class="toast-header">
-                <img src="..." class="rounded me-2" alt="...">
-                <strong class="me-auto">Bootstrap</strong>
-                <small>11 mins ago</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <form class="modal" id="delete-modal" method="post" th:action="@{/article/delete/{code}(code=${article.code})}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar artículo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro que querés eliminar este artículo?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No eliminar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
             </div>
-            <div class="toast-body">
-                Hello, world! This is a toast message.
-            </div>
-        </div>
+        </form>
+
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

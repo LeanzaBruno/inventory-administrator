@@ -21,9 +21,14 @@ public class ArticleController {
 	@Autowired
 	private VATRepository vatRepository;
 	
+    /**
+     * Gets the article's view
+     * @param code article's code
+     * @param model the view's model
+     * @return the view
+     */
 	@GetMapping("/{code}")
 	public String showPage(@PathVariable long code, Model model) {
-        log.info("Código: " + code);
         Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
     	model.addAttribute("vats", vatRepository.findAll());
 		model.addAttribute("article", article);
@@ -32,12 +37,12 @@ public class ArticleController {
 	}
 
     /**
-     * Updates articles
-     * @param code
-     * @param updatedArticle
+     * Updates article
+     * @param code article's code
+     * @param updatedArticle article object with updated parameters
      * @return the view
      */
-	@PostMapping("/{code}")
+	@PostMapping("/update/{code}")
 	public String showPage(@PathVariable long code, Article updatedArticle) {
         Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
         article.copy(updatedArticle);
@@ -45,12 +50,23 @@ public class ArticleController {
 		return "redirect:/";
 	}
 
+    /**
+     * Deletes article
+     * @param code
+     * @return home view
+     */
     @PostMapping("/delete/{code}")
     String deleteArticle(@PathVariable long code){
         articlesRepository.deleteById(code);
         return "redirect:/";
     }
     
+
+    /**
+     * Returns the view to create a new article
+     * @param model view's model
+     * @return the view
+     */
     @GetMapping("/new")
     String showCreatePage(Model model) {
     	model.addAttribute("vats", vatRepository.findAll());
@@ -58,6 +74,11 @@ public class ArticleController {
     	return "new";
     }
     
+    /**
+     * Creates a new article
+     * @param article
+     * @return home view
+     */
     @PostMapping("/new")
     String createArticle(Article article) {
     	articlesRepository.save(article);
