@@ -5,10 +5,11 @@ import kertz.Supermarket.exception.CategoryNotFoundException;
 import kertz.Supermarket.model.Category;
 import kertz.Supermarket.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 @RequestMapping("/categories")
 public class CategoryController {
 
@@ -16,30 +17,32 @@ public class CategoryController {
     private CategoryRepository repository;
 
     @GetMapping
-    public List<Category> getCategories(){ return repository.findAll(); }
-
-    @GetMapping("/{id}")
-    public Category getCategories(@PathVariable int id){
-        return repository.findById(id).orElseThrow( () -> new CategoryNotFoundException(id) );
+    public String getCategories(Model model){
+        model.addAttribute("categories", repository.findAll());
+        model.addAttribute("newCategory", new Category());
+        return "categories";
     }
 
-    @PostMapping
-    public void newCategory(@RequestBody Category category){
-        repository.save(category);
+
+    @PostMapping("/new")
+    public String newCategory(Category newCategory, Model model){
+        repository.save(newCategory);
+        model.addAttribute("categories", repository.findAll());
+        model.addAttribute("newCategory", new Category());
+        return "redirect:/categories";
     }
 
-    @PutMapping("/{id}")
-    public void updateCategory(@PathVariable int id, @RequestBody Category category){
-        Category categoryDB = repository.findById(id).orElseThrow( () -> new CategoryNotFoundException(id));
-        categoryDB.copy(category);
-        repository.save(categoryDB);
-    }
 
-    @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable int id){
+    @GetMapping("/delete/{id}")
+    public String deleteCategory(@PathVariable int id, Model model){
         Category category = repository.findById(id).orElseThrow( () -> new CategoryNotFoundException(id) );
         if( category.hasArticlesRelated() )
             throw new CategoryDeleteException(id);
-        repository.delete(category);
+        else
+            repository.delete(category);
+
+        model.addAttribute("categories", repository.findAll());
+        model.addAttribute("newCategory", new Category());
+        return "redirect:/categories";
     }
 }

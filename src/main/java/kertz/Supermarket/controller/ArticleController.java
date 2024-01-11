@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import kertz.Supermarket.model.Article;
 import kertz.Supermarket.repository.ArticleRepository;
 import kertz.Supermarket.repository.VATRepository;
-import lombok.extern.slf4j.Slf4j;
 import kertz.Supermarket.exception.ArticleNotFoundException;
 
-@Slf4j
 @Controller
-@RequestMapping("/article")
+@RequestMapping("/articles")
 public class ArticleController {
 
 	@Autowired
@@ -20,6 +18,12 @@ public class ArticleController {
 	
 	@Autowired
 	private VATRepository vatRepository;
+
+    @GetMapping
+    public String showArticles(Model model){
+        model.addAttribute("articles", articlesRepository.findAll());
+        return "articles";
+    }
 	
     /**
      * Gets the article's view
