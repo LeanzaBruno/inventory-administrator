@@ -161,7 +161,7 @@
             </form>
         </div>
 
-        <form class="modal" id="delete-modal" method="post" th:action="@{/article/delete/{code}(code=${article.code})}" tabindex="-1">
+        <form class="modal" id="delete-modal" method="post" th:action="@{/articles/delete/{code}(code=${article.code})}" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -172,7 +172,7 @@
                         <p>¿Estás seguro que querés eliminar este artículo?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </div>
                 </div>

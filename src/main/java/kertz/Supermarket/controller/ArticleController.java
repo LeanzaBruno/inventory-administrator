@@ -59,9 +59,10 @@ public class ArticleController {
      * @return home view
      */
     @PostMapping("/delete/{code}")
-    String deleteArticle(@PathVariable long code){
+    String deleteArticle(@PathVariable long code, Model model){
         articlesRepository.deleteById(code);
-        return "redirect:/";
+        model.addAttribute("articles", articlesRepository.findAll());
+        return "redirect:/articles";
     }
     
 
