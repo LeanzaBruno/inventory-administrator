@@ -48,6 +48,10 @@ public class Article {
 
     public Article(){}
 
+    public long getCode() {
+        return code;
+    }
+
     /**
      * Returns the net price of the purchase (without vat)
      * @return the price

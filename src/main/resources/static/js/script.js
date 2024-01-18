@@ -1,9 +1,5 @@
-const tableTitles = document.querySelector("#table-titles");
-const noArticlesMsg = document.querySelector("#no-articles");
-
-
+/*
 ( () => {
-   /*
    let rows = document.querySelect(".tr");
    rows.map(r => r.addEventListener('click', event => {
       let code = r.dataset.code;
@@ -12,7 +8,6 @@ const noArticlesMsg = document.querySelector("#no-articles");
       
 
    }));
-   */
 
    document.querySelector('#search').addEventListener('keyup', event => searchArticle(event.target.value) );
 
@@ -26,6 +21,7 @@ const noArticlesMsg = document.querySelector("#no-articles");
    });
 
 })();
+*/
 
 
 
@@ -89,46 +85,6 @@ function cleanPrice(number){
    return number.replaceAll(/[\$\ ]/g, '');
 }
 
-/**
- * Formats a number using 3 digits grouping
- * @param {string} number Represents a float number in a string
- * @param {string} thousandSeparator Character or string used to group numbers for a better reading
- * @param {boolean} pointSeparator If true, point is the decimal separator, if not, the comma.
- * @returns the formatted number
- */
-function formatNumber(number, thousandSeparator = ' ', pointSeparator = true){
-   const decimalSeparatorIndex = pointSeparator ? number.indexOf('.') : number.indexOf(',');
-   if( decimalSeparatorIndex != -1 ){
-      const integerPart = number.substring(0, decimalSeparatorIndex );
-      const decimalPart = number.substring(decimalSeparatorIndex + 1);
-      return formatInteger(integerPart, thousandSeparator) + (pointSeparator ? '.' : ',') + formatDecimal(decimalPart, thousandSeparator);
-   }
-   else return formatInteger(number, thousandSeparator);
-}
-
-
-/**
- * Formats the integer part of a number using 3 digits groups
- * @param {string} integer 
- * @param {string} thousandSeparator Character or string used to group numbers for a better reading
- * @returns the formatted number
- */
-function formatInteger(integer, thousandSeparator){
-   if(integer.length <= 3) return integer;
-   else return formatInteger(integer.substring(0, integer.length - 3), thousandSeparator) + thousandSeparator + integer.substring(integer.length - 3);
-}
-
-
-/**
- * Formats the decimal part of a number using 3 digits groups
- * @param {string} integer 
- * @param {string} thousandSeparator Character or string used to group numbers for a better reading
- * @returns the formatted number
- */
-function formatDecimal(decimal, thousandSeparator){
-   if(decimal.length <= 3) return decimal;
-   else return decimal.substring(0, 3) + thousandSeparator + formatDecimal( decimal.substring(3), thousandSeparator );
-}
 
 
 /**

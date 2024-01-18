@@ -36,7 +36,6 @@ public class ArticleController {
         Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
     	model.addAttribute("vats", vatRepository.findAll());
 		model.addAttribute("article", article);
-		model.addAttribute("backupArticle", article);
 		return "article";
 	}
 
