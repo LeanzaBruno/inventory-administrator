@@ -10,10 +10,6 @@
 <body class="vh-100">
 	<div class="container">
 		<div class="row">
-			<h2 class="col text-center">Crear artículo</h2>
-		</div>
-		
-		<div class="row">
 			<form action="#" th:object="${article}" method="post" class="col my-3">
 				<div class="form-floating mb-3">
 					<input type="text" class="form-control" name="title" placeholder="title" th:field="*{title}" required>
@@ -36,12 +32,19 @@
 				</div>
 
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" id="gain-percentage" name="gain-percentage" placeholder="gain" th:field="*{gainPercentage}" required>
-					<label for="gain-percentage">Porcentaje de ganancia</label>
+					<select class="form-select mb-3" 
+							name="gain" 
+							id="gain-percentage"
+							th:field="*{gainPercentage}"
+							required>
+						<option th:each="p : ${#numbers.sequence(0,200)}"
+								th:value="${p}" th:text="${p} + ' %'"></option>
+					</select>
+					<label for="gainPercentage">Ganancia</label>
 				</div>
 
 				<div class="form-floating mb-3">
-					<select class="form-select mb-3" name="iva" th:field="*{vat}" required>
+					<select class="form-select mb-3" name="iva" th:field="*{vatPercentage}" required>
 						<option th:each="vat: ${vats}" th:value="${vat.rate}" th:text="${vat.rate} + '% ' + ${vat.description}"></option>
 					</select>
 					<label for="iva">IVA</label>

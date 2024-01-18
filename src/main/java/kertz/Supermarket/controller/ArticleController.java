@@ -86,6 +86,6 @@ public class ArticleController {
     @PostMapping("/new")
     String createArticle(Article article) {
     	articlesRepository.save(article);
-    	return "redirect:/";
+    	return "redirect:/articles";
     }
 }
