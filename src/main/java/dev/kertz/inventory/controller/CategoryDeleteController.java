@@ -1,6 +1,6 @@
-package kertz.Supermarket.controller;
+package dev.kertz.inventory.controller;
 
-import kertz.Supermarket.exception.CategoryDeleteException;
+import dev.kertz.inventory.exception.CategoryDeleteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

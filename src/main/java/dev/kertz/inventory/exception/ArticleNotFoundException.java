@@ -1,4 +1,4 @@
-package kertz.Supermarket.exception;
+package dev.kertz.inventory.exception;
 
 public class ArticleNotFoundException extends RuntimeException{
     public ArticleNotFoundException(Long id){

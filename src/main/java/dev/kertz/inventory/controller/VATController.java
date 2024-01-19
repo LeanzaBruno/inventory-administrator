@@ -1,7 +1,7 @@
-package kertz.Supermarket.controller;
+package dev.kertz.inventory.controller;
 
-import kertz.Supermarket.model.VAT;
-import kertz.Supermarket.repository.VATRepository;
+import dev.kertz.inventory.model.VAT;
+import dev.kertz.inventory.repository.VATRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

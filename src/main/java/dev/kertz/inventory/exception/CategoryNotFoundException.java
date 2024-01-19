@@ -1,4 +1,4 @@
-package kertz.Supermarket.exception;
+package dev.kertz.inventory.exception;
 
 public class CategoryNotFoundException extends RuntimeException {
     public CategoryNotFoundException(int id){

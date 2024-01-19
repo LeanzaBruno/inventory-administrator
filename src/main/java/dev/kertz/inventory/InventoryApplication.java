@@ -1,11 +1,11 @@
-package kertz.Supermarket;
+package dev.kertz.inventory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SupermarketApplication {
+public class InventoryApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SupermarketApplication.class, args);
+		SpringApplication.run(InventoryApplication.class, args);
 	}
 }

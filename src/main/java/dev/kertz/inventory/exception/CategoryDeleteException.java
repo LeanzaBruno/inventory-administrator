@@ -1,6 +1,6 @@
-package kertz.Supermarket.exception;
+package dev.kertz.inventory.exception;
 
-import kertz.Supermarket.controller.CategoryController;
+import dev.kertz.inventory.controller.CategoryController;
 
 public class CategoryDeleteException extends RuntimeException{
     public CategoryDeleteException(int id){

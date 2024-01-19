@@ -1,4 +1,4 @@
-package kertz.Supermarket.model;
+package dev.kertz.inventory.model;
 
 import jakarta.persistence.*;
 import java.util.HashSet;

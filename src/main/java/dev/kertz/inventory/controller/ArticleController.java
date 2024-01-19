@@ -1,13 +1,13 @@
-package kertz.Supermarket.controller;
+package dev.kertz.inventory.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import kertz.Supermarket.model.Article;
-import kertz.Supermarket.repository.ArticleRepository;
-import kertz.Supermarket.repository.VATRepository;
-import kertz.Supermarket.exception.ArticleNotFoundException;
+import dev.kertz.inventory.model.Article;
+import dev.kertz.inventory.repository.ArticleRepository;
+import dev.kertz.inventory.repository.VATRepository;
+import dev.kertz.inventory.exception.ArticleNotFoundException;
 
 @Controller
 @RequestMapping("/articles")

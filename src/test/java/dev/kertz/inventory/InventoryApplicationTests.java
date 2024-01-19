@@ -1,10 +1,10 @@
-package kertz.Supermarket;
+package dev.kertz.inventory;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SupermarketApplicationTests {
+class InventoryApplicationTests {
 
 	@Test
 	void contextLoads() {

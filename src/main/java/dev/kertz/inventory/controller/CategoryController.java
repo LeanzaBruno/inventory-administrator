@@ -1,9 +1,9 @@
-package kertz.Supermarket.controller;
+package dev.kertz.inventory.controller;
 
-import kertz.Supermarket.exception.CategoryDeleteException;
-import kertz.Supermarket.exception.CategoryNotFoundException;
-import kertz.Supermarket.model.Category;
-import kertz.Supermarket.repository.CategoryRepository;
+import dev.kertz.inventory.exception.CategoryDeleteException;
+import dev.kertz.inventory.exception.CategoryNotFoundException;
+import dev.kertz.inventory.model.Category;
+import dev.kertz.inventory.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

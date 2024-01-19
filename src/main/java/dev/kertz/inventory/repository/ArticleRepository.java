@@ -1,6 +1,6 @@
-package kertz.Supermarket.repository;
+package dev.kertz.inventory.repository;
 
-import kertz.Supermarket.model.Article;
+import dev.kertz.inventory.model.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

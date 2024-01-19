@@ -1,4 +1,4 @@
-package kertz.Supermarket.controller;
+package dev.kertz.inventory.controller;
 
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

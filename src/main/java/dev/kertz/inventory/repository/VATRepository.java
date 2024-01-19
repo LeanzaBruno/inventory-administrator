@@ -1,6 +1,6 @@
-package kertz.Supermarket.repository;
+package dev.kertz.inventory.repository;
 
-import kertz.Supermarket.model.VAT;
+import dev.kertz.inventory.model.VAT;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
