@@ -45,12 +45,12 @@ public class ArticleController {
      * @param updatedArticle article object with updated parameters
      * @return the view
      */
-	@PostMapping("/update/{code}")
-	public String showPage(@PathVariable long code, Article updatedArticle) {
+	@PostMapping("update/{code}")
+	public String showPage(@PathVariable long code, Model model, Article updatedArticle) {
         Article article = articlesRepository.findById(code).orElseThrow( () -> new ArticleNotFoundException(code) );
         article.copy(updatedArticle);
         articlesRepository.save(article);
-		return "redirect:/";
+		return "redirect:/articles";
 	}
 
     /**

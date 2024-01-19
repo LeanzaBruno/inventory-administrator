@@ -2,7 +2,7 @@
 const formatter = Intl.NumberFormat(undefined, 'currency', 'ARS' );
 
 ( () => {
-    document.querySelectorAll("input").forEach( input => input.addEventListener('change', () => {
+    document.querySelectorAll("input:not(form-control-plaintext), textarea, select").forEach( input => input.addEventListener('change', () => {
       document.querySelector("input[type=reset]").disabled = false;
       document.querySelector("button[type=submit]").disabled = false;
     }));

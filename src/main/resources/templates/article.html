@@ -10,12 +10,13 @@
 </head>
 <body class="vh-100">
 
+    <!-- TODO dejar esta página para editar archivo -->
+
     <!-- NAVBAR IN PROCESS -->
 
     <main class="container-fluid">
         <div class="row">
-            <form class="col my-3" th:object="${article}" method="post" th:action="@{/article/update}">
-
+            <form class="col my-3" th:object="${article}" method="post" th:action="@{update/{code}(code = ${article.code})}">
                 <div class="card mb-3">
                     <div class="card-header">
                         Datos básicos
@@ -27,17 +28,18 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="title" placeholder="title" th:field="*{title}" required>
+                            <input type="text" class="form-control" placeholder="title" th:field="*{title}" required>
                             <label for="title">Título</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="brand" placeholder="brand" th:field="*{brand}">
+                            <input type="text" class="form-control" placeholder="brand" th:field="*{brand}">
                             <label for="brand">Marca</label>
                         </div>
 
+                        <!-- TODO Resolver por qué la descripción la toma nula-->
                         <div class="form-floating">
-                            <textarea class="form-control" id="description" rows="5" placeholder="descripción" th:field="*{description}">
+                            <textarea class="form-control" rows="5" placeholder="ph" th:field="*{description}" required>
                             </textarea>
                             <label for="description">Descripción</label>
                         </div>
@@ -52,13 +54,12 @@
                     </div>
                     <div class="card-body">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="stock" th:field="*{stock}" min="0" placeholder="ph" required>
+                            <input type="number" class="form-control" th:field="*{stock}" min="0" placeholder="ph" required>
                             <label for="stock">Stock (unidades)</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <select class="form-select mb-3"
-                                    name="vat"
                                     id="vat"
                                     th:field="*{vatPercentage}"
                                     required>
@@ -73,7 +74,6 @@
 
                         <div class="form-floating mb-3">
                             <select class="form-select mb-3" 
-                                    name="gain" 
                                     id="gain-percentage"
                                     th:field="*{gainPercentage}"
                                     required>
@@ -123,45 +123,18 @@
                             <input type="text" class="form-control-plaintext " id="difference" th:field="*{vatDifference}"  readonly>
                             <label for="difference">Diferencia ($)</label>
                         </div>
-
-                        <!--
-
-
-                        <table class="table align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Precio neto de compra</th>
-                                    <th>Precio neto de venta</th>
-                                    <th>Precio bruto de venta</th>
-                                    <th>Crédito fiscal</th>
-                                    <th>Débito fiscal</th>
-                                    <th>Diferencia</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="align-center">
-                                    <td class="price" id="purchase-net" th:text="${article.purchaseNetPrice}"/>
-                                    <td class="price" id="sale-net" th:text="${article.saleNetPrice}"/>
-                                    <td class="price" id="sale-gross" th:text="${article.saleGrossPrice}"/>
-                                    <td class="price" id="credit" th:text="${article.vatCredit}"/>
-                                    <td class="price" id="debit" th:text="${article.vatDebit}"/>
-                                    <td class="price" id="difference" th:text="${article.vatDifference}"/>
-                                </tr>
-                            </tbody>
-                        </table>
-                        -->
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-evenly">
-                    <input type="reset" class="btn btn-secondary btn-lg" value="Deshacer cambios" th:onclick="this.disabled = true" disabled/>
-                    <button type="submit" class="btn btn-success btn-lg" disabled>Guardar cambios</button>
-                    <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#delete-modal">Eliminar artículo</button>
+                <div class="d-flex justify-content-end">
+                    <input type="reset" class="btn btn-secondary me-3 " value="Deshacer cambios" th:onclick="this.disabled = true"/>
+                    <button type="submit" class="btn btn-success me-3" disabled>Guardar cambios</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">Eliminar artículo</button>
                 </div>
             </form>
         </div>
 
-        <form class="modal" id="delete-modal" method="post" th:action="@{/articles/delete/{code}(code=${article.code})}" tabindex="-1">
+        <form class="modal" id="delete-modal" method="post" th:action="@{delete/{code}(code=${article.code})}" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
